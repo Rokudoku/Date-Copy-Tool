@@ -16,7 +16,7 @@ December 2016/January 2017
 ===========================
 
 ===Notable changes from osx version===
-'Date' is not a simple commandline tool. Need to use time module.
+'Date' is not a simple commandline tool. Need to use datetime module.
 Slightly different ttk settings.
 Lots of changes to do with menubar.
 """
@@ -24,7 +24,7 @@ Lots of changes to do with menubar.
 import tkinter as tk
 from tkinter import ttk
 import sys
-import time
+from datetime import date, timedelta
 
 class MainApp(tk.Frame):
     """
@@ -100,35 +100,38 @@ class Dates(tk.Frame):
     def copy_date(self, option):
         """
         Clears clipboard and depending on option, gives the correct date.
-        Uses the inbuilt date program/command.
+        Uses the inbuilt datetime module.
+        (Learned how to do this after doing the bash command option in the osx
+        version).
         Also sets focus on the associated button so user knows what they
         pressed.
         """
         self.parent.clipboard_clear()
+        
+        self.date = date.today()
 
         if option == 1:
             self.yesterday_btn.focus()
-            cmd = 'date -v-1d +"%d %b %Y"'
+            self.date -= timedelta(days=1)
+            
         elif option == 2:
             self.today_btn.focus()
-            cmd = 'date +"%d %b %Y"'
+            
         elif option == 3:
             self.tomorrow_btn.focus()
-            cmd = 'date -v+1d +"%d %b %Y"'
+            self.date += timedelta(days=1)
+            
         else:
             sys.stderr.write('copy_date was called with an invalid arg')
             sys.exit(1)
         
-        self.output = subprocess.check_output(cmd, shell=True)
-        #check_output returns a byte string e.g. b'dd mm yyyy\n'
-        #decoded to get rid of the b and quotes and ignored newline
-        self.output = self.output.decode("utf-8")[:-1]
+        self.output = self.date.strftime('%d %b %Y')
 
-        if self.parent.menubar.trailing_check.get():
-            self.output += ' '
+        #if self.parent.menubar.trailing_check.get():
+        #    self.output += ' '
 
-        if self.parent.menubar.leading_check.get():
-            self.output = ' ' + self.output
+        #if self.parent.menubar.leading_check.get():
+        #    self.output = ' ' + self.output
 
         self.parent.clipboard_append(self.output)
 
