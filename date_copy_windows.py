@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-=== Date Copy Tool ===
+=== Date Copy Tool - Windows Version ===
 A tool that copies a specified date to clipboard so that it can be pasted. 
 
 By pressing the 'Today' button or using its hotkey, the current date is 
@@ -14,12 +14,17 @@ The format is: <date number> <abbreviated month> <4 digit year>
 By Jerome Probst 
 December 2016/January 2017
 ===========================
+
+===Notable changes from osx version===
+'Date' is not a simple commandline tool. Need to use time module.
+Slightly different ttk settings.
+Lots of changes to do with menubar.
 """
 
 import tkinter as tk
 from tkinter import ttk
-import sys, subprocess
-
+import sys
+import time
 
 class MainApp(tk.Frame):
     """
@@ -40,7 +45,7 @@ class MainApp(tk.Frame):
         self.dates = Dates(self)
         self.dates.pack()
 
-        self.menubar = Menubar(self)
+        #self.menubar = Menubar(self)
 
         self.grid(row=0, column=0, sticky="nsew")
 
@@ -87,7 +92,7 @@ class Dates(tk.Frame):
         Sets up the buttons to correspond to 1,2,3. Gets passed the button
         number so copy_date knows what to do.
         """
-        # Note: seems keybinds must be done at root (self.parent.parent)"""
+        # Note: seems keybinds must be done at root (self.parent.parent)
         self.parent.parent.bind("1", lambda x: self.copy_date(1))
         self.parent.parent.bind("2", lambda x: self.copy_date(2))
         self.parent.parent.bind("3", lambda x: self.copy_date(3))
