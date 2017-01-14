@@ -18,7 +18,8 @@ December 2016/January 2017
 
 import tkinter as tk
 from tkinter import ttk
-import sys, subprocess
+import sys
+import subprocess
 
 
 class MainApp(tk.Frame):
@@ -98,6 +99,10 @@ class Dates(tk.Frame):
         Uses the inbuilt date program/command.
         Also sets focus on the associated button so user knows what they
         pressed.
+        *** NOTE: I know that datetime module exists now after doing work
+        on the windows version. Although it is simpler and possibly just
+        superior, I will keep this for the sake of learning how to capture
+        the output of commandline tools ***
         """
         self.parent.clipboard_clear()
 

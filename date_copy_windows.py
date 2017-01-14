@@ -113,14 +113,11 @@ class Dates(tk.Frame):
         if option == 1:
             self.yesterday_btn.focus()
             self.date -= timedelta(days=1)
-            
         elif option == 2:
             self.today_btn.focus()
-            
         elif option == 3:
             self.tomorrow_btn.focus()
             self.date += timedelta(days=1)
-            
         else:
             sys.stderr.write('copy_date was called with an invalid arg')
             sys.exit(1)
