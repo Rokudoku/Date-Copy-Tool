@@ -125,11 +125,11 @@ class Dates(tk.Frame):
         
         self.output = self.date.strftime('%d %b %Y')
 
-        #if self.parent.menubar.trailing_check.get():
-        #    self.output += ' '
+        if self.parent.menubar.trailing_check.get():
+            self.output += ' '
 
-        #if self.parent.menubar.leading_check.get():
-        #    self.output = ' ' + self.output
+        if self.parent.menubar.leading_check.get():
+            self.output = ' ' + self.output
 
         self.parent.clipboard_append(self.output)
 
@@ -157,6 +157,8 @@ class Menubar(tk.Menu):
         self.root.option_add('*tearOff', tk.FALSE)
 
         self.file_menu()
+        self.options_menu()
+        self.help_menu()
 
         self.root.config(menu=self)
 
@@ -183,8 +185,8 @@ class Menubar(tk.Menu):
         Contains the 'Size' submenu which determines size of the buttons.
         """
 
-        self.optionsmenu = tk.Menu(self.menubar)
-        self.menubar.add_cascade(menu=self.optionsmenu, label='Options')
+        self.optionsmenu = tk.Menu(self)
+        self.add_cascade(menu=self.optionsmenu, label='Options')
 
         self.size = self.size_submenu()
         self.spacing = self.spacing_submenu()
@@ -246,8 +248,8 @@ class Menubar(tk.Menu):
         """
         The 'Help' menubar. Contains 'Instructions'.
         """
-        self.helpmenu = tk.Menu(self.menubar)
-        self.menubar.add_cascade(menu=self.helpmenu, label='Help')
+        self.helpmenu = tk.Menu(self)
+        self.add_cascade(menu=self.helpmenu, label='Help')
 
         self.helpmenu.add_command(label='Instructions')
 
