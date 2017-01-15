@@ -26,11 +26,11 @@ from tkinter import ttk
 import sys
 from datetime import date, timedelta
 
-
 ###Button size constants
 SMALL = 50
 MEDIUM = 65
 LARGE = 80
+
 
 class MainApp(tk.Frame):
     """
@@ -184,10 +184,22 @@ class Menubar(tk.Menu):
         self.filemenu = tk.Menu(self)
         self.add_cascade(menu=self.filemenu, label='File')
 
-        self.filemenu.add_command(label='About')
+        self.filemenu.add_command(label='About', command=self.about_window)
         self.filemenu.add_separator()
         self.filemenu.add_command(label='Quit', command=self.close_window)
 
+    def about_window(self):
+        """
+        A new window that gives information about this program.
+        """
+        self.aboutwindow = tk.Toplevel(self.root)
+        self.aboutwindow.title('About Date Copy Tool')
+        self.aboutwindow.geometry('300x200')
+        self.aboutwindow.resizable(tk.FALSE, tk.FALSE)
+        
+        self.abouttext = ttk.Label(self.aboutwindow, text='Why hello there')
+        self.abouttext.pack()
+    
     def close_window(self):
         """Closes the program by destryoing root window."""
         self.root.destroy()
