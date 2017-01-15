@@ -174,8 +174,8 @@ class Menubar(tk.Menu):
         self.filemenu.add_command(label='Quit', command=self.close_window)
 
     def close_window(self):
-        """Basically root.destroy() to close the program."""
-        self.parent.parent.destroy()
+        """Closes the program by destryoing root window."""
+        self.root.destroy()
 
     def options_menu(self):
         """
