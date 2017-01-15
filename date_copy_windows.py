@@ -26,6 +26,12 @@ from tkinter import ttk
 import sys
 from datetime import date, timedelta
 
+
+###Button size constants
+SMALL = 50
+MEDIUM = 65
+LARGE = 80
+
 class MainApp(tk.Frame):
     """
     The parent window.
@@ -66,7 +72,10 @@ class Dates(tk.Frame):
         self.set_keybinds()
 
     def create_buttons(self):
-        """Creates the "Yesterday", "Today" and "Tomorrow" buttons"""
+        """
+        Creates the "Yesterday", "Today" and "Tomorrow" buttons.
+        Default size is medium.
+        """
 
         self.s = ttk.Style()
 
@@ -83,6 +92,10 @@ class Dates(tk.Frame):
         self.tomorrow_btn = ttk.Button(self, text="Tomorrow (3)",
                         style="date.TButton", 
                         command=lambda: self.copy_date(3))
+
+        self.yesterday_btn.configure(padding=MEDIUM)
+        self.today_btn.configure(padding=MEDIUM)
+        self.tomorrow_btn.configure(padding=MEDIUM)
 
         self.yesterday_btn.pack()
         self.today_btn.pack()
@@ -203,13 +216,13 @@ class Menubar(tk.Menu):
 
         self.button_size = tk.StringVar()
         self.sizemenu.add_radiobutton(label='Small', 
-                                command=lambda:self.change_button_size(10),
+                                command=lambda:self.change_button_size(SMALL),
                                 variable=self.button_size, value='Small')
         self.sizemenu.add_radiobutton(label='Medium', 
-                                command=lambda:self.change_button_size(30),
+                                command=lambda:self.change_button_size(MEDIUM),
                                 variable=self.button_size, value='Medium')
         self.sizemenu.add_radiobutton(label='Large', 
-                                command=lambda:self.change_button_size(50),
+                                command=lambda:self.change_button_size(LARGE),
                                 variable=self.button_size, value='Large')
         self.button_size.set('Medium')
 
