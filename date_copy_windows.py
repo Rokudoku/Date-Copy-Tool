@@ -45,9 +45,10 @@ class MainApp(tk.Frame):
         self.dates = Dates(self)
         self.dates.pack()
 
-        #self.menubar = Menubar(self)
+        self.menubar = Menubar(self)
 
         self.grid(row=0, column=0, sticky="nsew")
+
 
 class Dates(tk.Frame):
     """ 
@@ -132,55 +133,32 @@ class Dates(tk.Frame):
 
         self.parent.clipboard_append(self.output)
 
-class Menubar(tk.Toplevel):
+
+class Menubar(tk.Menu):
     """
-    The menubar. 
-    Actually a Toplevel window, much like the other classes are Frames.
+    The menubar. Each window can have a menubar attached to it by adjusting it's
+    "menu" config option. In this case we are working off of root.
     """
 
     def __init__(self, parent):
         """
-        Uses the init method of Toplevel to make self a Toplevel window.
+        Uses the __init__ method of Menu to make self a Menu.
         Its parent is the mainframe so it can easily communicate with the
         mainframe attributes and change things such as button size.
+        We need to make sure to work with root though (parent of mainframe) for
+        making the menu a part of the root window.
         """
-
-        tk.Toplevel.__init__(self, parent)
-        self.parent = parent
-        self.menubar = tk.Menu(self)
-
-        #intentionally leaving out below (see method comments for details)
-        #self.apple_menu()
+        self.parent = parent      #remember that this is the mainframe
+        self.root = parent.parent
         
-        self['menu'] = self.menubar
-
-        #removes dotted line tearoff option on win32 and x11
-        self.parent.parent.option_add('*tearOff', tk.FALSE)
+        tk.Menu.__init__(self, self.root)
+        
+        #removes dotted line tearoff option for all the menus
+        self.root.option_add('*tearOff', tk.FALSE)
 
         self.file_menu()
-        self.options_menu()
-        self.help_menu()
 
-        #this is to remove a second window that shows up
-        #it's possible I did something wrong with the setup of the menubar
-        #but this removes it pretty easily with seemingly no drawback
-        self.withdraw()
-
-    def apple_menu(self):
-        """
-        OS X specific menu to avoid the default Python menu showing 
-        'About Python'. The Python menu (the application binary) CAN be 
-        changed by renaming or making a copy of the binary used to run
-        the script.
-        For now I'm just going to leave this entire apple menu out because
-        I think it's fine and I'm not sure how this would work when
-        converted to a standalone executable. The main intention is a 
-        Windows exe anyway.
-        """
-        self.appmenu = tk.Menu(self.menubar, name='apple')
-        self.menubar.add_cascade(menu=appmenu)
-        self.appmenu.add_command(label='About Copy Date Tool')
-        self.appmenu.add_separator()
+        self.root.config(menu=self)
 
     def file_menu(self):
         """
@@ -188,8 +166,8 @@ class Menubar(tk.Toplevel):
         Contains 'About' and 'Quit' with a seperator in between.
         """
 
-        self.filemenu = tk.Menu(self.menubar)
-        self.menubar.add_cascade(menu=self.filemenu, label='File')
+        self.filemenu = tk.Menu(self)
+        self.add_cascade(menu=self.filemenu, label='File')
 
         self.filemenu.add_command(label='About')
         self.filemenu.add_separator()
