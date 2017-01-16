@@ -17,8 +17,7 @@ December 2016/January 2017
 
 ===Notable changes from osx version===
 'Date' is not a simple commandline tool. Need to use datetime module.
-Slightly different ttk settings.
-Lots of changes to do with menubar.
+A few changes to do with menubar.
 """
 
 import tkinter as tk
