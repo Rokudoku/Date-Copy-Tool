@@ -87,6 +87,9 @@ class Dates(tk.Frame):
         Default size is medium.
         """
 
+        #self.sizegrip = ttk.Sizegrip(self)
+        #self.sizegrip.grid(row=999, column=999, sticky="se")
+        
         self.s = ttk.Style()
 
         self.s.configure("date.TButton", padding=35, width=14)
@@ -332,6 +335,9 @@ class Menubar(tk.Menu):
                                          command=self.check_resize)
         
     def check_resize(self):
+        """
+        Makes the program resizable or not depending on resizable_check.
+        """
 
         if self.resizable_check.get():
             self.root.resizable(tk.TRUE, tk.TRUE)
