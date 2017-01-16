@@ -106,6 +106,7 @@ class Dates(tk.Frame):
         Sets up the buttons to correspond to 1,2,3. Gets passed the button
         number so copy_date knows what to do.
         """
+        
         # Note: seems keybinds must be done at root (self.parent.parent)
         self.parent.parent.bind("1", lambda x: self.copy_date(1))
         self.parent.parent.bind("2", lambda x: self.copy_date(2))
@@ -120,6 +121,7 @@ class Dates(tk.Frame):
         Also sets focus on the associated button so user knows what they
         pressed.
         """
+        
         self.parent.clipboard_clear()
         
         self.date = date.today()
@@ -161,6 +163,7 @@ class Menubar(tk.Menu):
         We need to make sure to work with root though (parent of mainframe) for
         making the menu a part of the root window.
         """
+        
         self.parent = parent      #remember that this is the mainframe
         self.root = parent.parent
         
@@ -192,9 +195,10 @@ class Menubar(tk.Menu):
         """
         A new window that gives information about this program.
         """
+        
         self.aboutwindow = tk.Toplevel(self.parent)
         self.aboutwindow.title('About Date Copy Tool')
-        self.aboutwindow.geometry('300x200'+self.root_coords())
+        self.aboutwindow.geometry('300x200' + self.root_coords())
         self.aboutwindow.resizable(tk.FALSE, tk.FALSE)
 
         self.abouttext = ttk.Label(self.aboutwindow, text='Why hello there')
@@ -204,14 +208,21 @@ class Menubar(tk.Menu):
         """
         Returns the x/y coordinates of the root window. (as +x+y)
         Used to find out where to place other toplevel windows.
+        Don't want to be placed EXACTLY on top, so there is a bit extra.
         """
-        #gets format of heightxwidth+x+y
+        
+        EXTRA = 30
+        
+        #.geometry() gets format of heightxwidth+x+y
         coords = self.root.geometry().split('+')
-        result = '+' + str(coords[1]) + '+' + str(coords[2])
+        x = int(coords[1]) + EXTRA
+        y = int(coords[2]) + EXTRA
+        result = '+' + str(x) + '+' + str(y)
         return result
     
     def close_window(self):
         """Closes the program by destryoing root window."""
+        
         self.root.destroy()
 
     def options_menu(self):
@@ -219,7 +230,7 @@ class Menubar(tk.Menu):
         The 'Options' menubar.
         Contains the 'Size' submenu which determines size of the buttons.
         """
-
+        
         self.optionsmenu = tk.Menu(self)
         self.add_cascade(menu=self.optionsmenu, label='Options')
 
@@ -252,6 +263,7 @@ class Menubar(tk.Menu):
         """
         Changes the button size by accessing the dates created in mainframe
         """
+        
         self.parent.dates.yesterday_btn.configure(padding=size)
         self.parent.dates.today_btn.configure(padding=size)
         self.parent.dates.tomorrow_btn.configure(padding=size)
@@ -262,7 +274,7 @@ class Menubar(tk.Menu):
         the date that is copied to clipboard. They are either on or off.
         Default is both off.
         """
-
+        
         self.spacingmenu = tk.Menu(self.optionsmenu)
         self.optionsmenu.add_cascade(menu=self.spacingmenu, label='Spacing')
 
@@ -283,6 +295,7 @@ class Menubar(tk.Menu):
         """
         The 'Help' menubar. Contains 'Instructions'.
         """
+        
         self.helpmenu = tk.Menu(self)
         self.add_cascade(menu=self.helpmenu, label='Help')
 
