@@ -265,6 +265,7 @@ class Menubar(tk.Menu):
 
         self.size = self.size_submenu()
         self.spacing = self.spacing_submenu()
+        self.resizable = self.resizable_option()
 
     def size_submenu(self):
         """
@@ -320,6 +321,23 @@ class Menubar(tk.Menu):
         ### These Bool values are used when creating the actual output.
         ### (Dates.copy_date)
 
+    def resizable_option(self):
+        """
+        Sets the boolean variable of resizable_check to be either true or false.
+        """
+        self.resizable_check = tk.BooleanVar()
+        self.optionsmenu.add_checkbutton(label='Resizable',
+                                         variable=self.resizable_check,
+                                         onvalue=True, offvalue=False,
+                                         command=self.check_resize)
+        
+    def check_resize(self):
+
+        if self.resizable_check.get():
+            self.root.resizable(tk.TRUE, tk.TRUE)
+        else:
+            self.root.resizable(tk.FALSE, tk.FALSE)
+            self.root.geometry("")      #set window to original size
 
 root = tk.Tk()
 
@@ -327,6 +345,8 @@ root.title("Date Copy Tool")
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
+
+root.resizable(tk.FALSE, tk.FALSE)      #not resizable is default
 
 app = MainApp(root)
 
