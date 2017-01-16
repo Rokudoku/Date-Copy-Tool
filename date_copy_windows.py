@@ -47,8 +47,19 @@ class MainApp(tk.Frame):
         ttk.Frame.__init__(self, parent)
         self.parent = parent
 
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+
         self.dates = Dates(self)
-        self.dates.pack()
+        self.dates.grid(row=0, column=0, sticky="nsew")
+
+        #set all parts of the frame's grid to be resizable
+        self.dates.rowconfigure(0, weight=1)
+        self.dates.columnconfigure(0, weight=1)
+        self.dates.rowconfigure(1, weight=1)
+        self.dates.columnconfigure(0, weight=1)
+        self.dates.rowconfigure(2, weight=1)
+        self.dates.columnconfigure(0, weight=1)
 
         self.menubar = Menubar(self)
 
@@ -95,11 +106,11 @@ class Dates(tk.Frame):
         self.yesterday_btn.configure(padding=MEDIUM)
         self.today_btn.configure(padding=MEDIUM)
         self.tomorrow_btn.configure(padding=MEDIUM)
-
-        self.yesterday_btn.pack()
-        self.today_btn.pack()
-        self.tomorrow_btn.pack()
-
+        
+        self.yesterday_btn.grid(row=0, column=0, sticky="nsew")
+        self.today_btn.grid(row=1, column=0, sticky="nsew")
+        self.tomorrow_btn.grid(row=2, column=0, sticky="nsew")
+        
     def set_keybinds(self):
         """
         Sets up the buttons to correspond to 1,2,3. Gets passed the button
