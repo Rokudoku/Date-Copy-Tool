@@ -192,13 +192,23 @@ class Menubar(tk.Menu):
         """
         A new window that gives information about this program.
         """
-        self.aboutwindow = tk.Toplevel(self.root)
+        self.aboutwindow = tk.Toplevel(self.parent)
         self.aboutwindow.title('About Date Copy Tool')
-        self.aboutwindow.geometry('300x200')
+        self.aboutwindow.geometry('300x200'+self.root_coords())
         self.aboutwindow.resizable(tk.FALSE, tk.FALSE)
-        
+
         self.abouttext = ttk.Label(self.aboutwindow, text='Why hello there')
         self.abouttext.pack()
+
+    def root_coords(self):
+        """
+        Returns the x/y coordinates of the root window. (as +x+y)
+        Used to find out where to place other toplevel windows.
+        """
+        #gets format of heightxwidth+x+y
+        coords = self.root.geometry().split('+')
+        result = '+' + str(coords[1]) + '+' + str(coords[2])
+        return result
     
     def close_window(self):
         """Closes the program by destryoing root window."""
