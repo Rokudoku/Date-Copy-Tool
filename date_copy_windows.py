@@ -174,7 +174,6 @@ class Menubar(tk.Menu):
 
         self.file_menu()
         self.options_menu()
-        self.help_menu()
 
         self.root.config(menu=self)
 
@@ -215,7 +214,10 @@ class Menubar(tk.Menu):
                     "most efficient way of using this tool.\n" \
                     "\nThe date is in the format:\n" \
                     "\t<Day> <Abbreviated Month> " \
-                    "<Full Year> \n\te.g. 16 Jan 2017\n\n\n" \
+                    "<Full Year> \n\te.g. 16 Jan 2017\n\n" \
+                    "The size of the buttons and the addition of a space " \
+                    "before or after the date (or both) can be changed " \
+                    "using the 'Options' menu.\n\n" \
                     "Created by Jerome Probst 2016/2017."
         self.abouttext = ttk.Label(self.aboutwindow, text=abouttext,
                                    wraplength=int(WIDTH))
@@ -308,15 +310,6 @@ class Menubar(tk.Menu):
         ### These Bool values are used when creating the actual output.
         ### (Dates.copy_date)
 
-    def help_menu(self):
-        """
-        The 'Help' menubar. Contains 'Instructions'.
-        """
-        
-        self.helpmenu = tk.Menu(self)
-        self.add_cascade(menu=self.helpmenu, label='Help')
-
-        self.helpmenu.add_command(label='Instructions')
 
 root = tk.Tk()
 
