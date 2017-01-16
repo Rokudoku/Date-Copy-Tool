@@ -195,14 +195,31 @@ class Menubar(tk.Menu):
         """
         A new window that gives information about this program.
         """
+
+        WIDTH = str(400)
+        HEIGHT = str(300)
         
         self.aboutwindow = tk.Toplevel(self.parent)
         self.aboutwindow.title('About Date Copy Tool')
-        self.aboutwindow.geometry('300x200' + self.root_coords())
+        self.aboutwindow.geometry(WIDTH + 'x' + HEIGHT + self.root_coords())
         self.aboutwindow.resizable(tk.FALSE, tk.FALSE)
 
-        self.abouttext = ttk.Label(self.aboutwindow, text='Why hello there')
-        self.abouttext.pack()
+        abouttext = "Welcome to Date Copy Tool!\n\n" \
+                    "This tool aims to be a quick way to copy today's, " \
+                    "yesterday's or tomorrow's date to clipboard so that you " \
+                    "may paste this date wherever you like.\n\n" \
+                    "You have the choice to either click the buttons or " \
+                    "use the numbers in the parentheses inside the buttons. " \
+                    "But remember, you must be tabbed into the program to use " \
+                    "the numbers. This makes alt-tabbing probably the \n" \
+                    "most efficient way of using this tool.\n" \
+                    "\nThe date is in the format:\n" \
+                    "\t<Day> <Abbreviated Month> " \
+                    "<Full Year> \n\te.g. 16 Jan 2017\n\n\n" \
+                    "Created by Jerome Probst 2016/2017."
+        self.abouttext = ttk.Label(self.aboutwindow, text=abouttext,
+                                   wraplength=int(WIDTH))
+        self.abouttext.grid()
 
     def root_coords(self):
         """
