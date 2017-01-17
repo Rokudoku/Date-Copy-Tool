@@ -86,9 +86,6 @@ class Dates(tk.Frame):
         Creates the "Yesterday", "Today" and "Tomorrow" buttons.
         Default size is medium.
         """
-
-        #self.sizegrip = ttk.Sizegrip(self)
-        #self.sizegrip.grid(row=999, column=999, sticky="se")
         
         self.s = ttk.Style()
         self.s.configure("date.TButton", width=14)
@@ -272,7 +269,6 @@ class Menubar(tk.Menu):
         self.spacing = self.spacing_submenu()
         self.optionsmenu.add_command(label='Button Size Scale',
                                      command=self.size_scale_window)
-        self.resizable = self.resizable_option()
 
     def size_submenu(self):
         """
@@ -382,28 +378,6 @@ class Menubar(tk.Menu):
 
         self.size_scale.destroy()
 
-    def resizable_option(self):
-        """
-        Sets the boolean variable of resizable_check to be either true or false.
-        """
-        
-        self.resizable_check = tk.BooleanVar()
-        self.optionsmenu.add_checkbutton(label='Resizable',
-                                         variable=self.resizable_check,
-                                         onvalue=True, offvalue=False,
-                                         command=self.check_resize)
-        
-    def check_resize(self):
-        """
-        Makes the program resizable or not depending on resizable_check.
-        """
-
-        if self.resizable_check.get():
-            self.root.resizable(tk.TRUE, tk.TRUE)
-        else:
-            self.root.resizable(tk.FALSE, tk.FALSE)
-            self.root.geometry("")      #set window to original size
-
 root = tk.Tk()
 
 root.title("Date Copy Tool")
@@ -411,7 +385,7 @@ root.title("Date Copy Tool")
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
 
-root.resizable(tk.FALSE, tk.FALSE)      #not resizable is default
+root.resizable(tk.FALSE, tk.FALSE)
 
 app = MainApp(root)
 
