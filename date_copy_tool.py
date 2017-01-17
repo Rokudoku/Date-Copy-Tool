@@ -14,6 +14,13 @@ The format is: <date number> <abbreviated month> <4 digit year>
 By Jerome Probst 
 December 2016/January 2017
 ===========================
+
+Most valuable resources incase I need them later or someone else wants to
+learn:
+    -tkdocs.com
+    -http://stackoverflow.com/questions/17466561/best-way-to-structure-a-tkinter-application
+    -Corey Schafer OOP videos on youtube
+    -sentdex python and tkinter videos on youtube
 """
 
 import tkinter as tk
