@@ -14,10 +14,6 @@ The format is: <date number> <abbreviated month> <4 digit year>
 By Jerome Probst 
 December 2016/January 2017
 ===========================
-
-===Notable changes from osx version===
-'Date' is not a simple commandline tool. Need to use datetime module.
-A few changes to do with menubar.
 """
 
 import tkinter as tk
@@ -25,7 +21,7 @@ from tkinter import ttk
 import sys
 from datetime import date, timedelta
 
-###Button size constants
+###Button size preset constants
 SMALL = 50
 MEDIUM = 65
 LARGE = 80
@@ -35,7 +31,7 @@ class MainApp(tk.Frame):
     """
     The parent window.
     Interacts with other sections as classes to make things cleaner and 
-    easier to manage if doing more than just the date buttons.
+    easier to manage.
     """
 
     def __init__(self, parent):
@@ -47,19 +43,8 @@ class MainApp(tk.Frame):
         ttk.Frame.__init__(self, parent)
         self.parent = parent
 
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure(0, weight=1)
-
         self.dates = Dates(self)
         self.dates.grid(row=0, column=0, sticky="nsew")
-
-        #set all parts of the frame's grid to be resizable
-        self.dates.rowconfigure(0, weight=1)
-        self.dates.columnconfigure(0, weight=1)
-        self.dates.rowconfigure(1, weight=1)
-        self.dates.columnconfigure(0, weight=1)
-        self.dates.rowconfigure(2, weight=1)
-        self.dates.columnconfigure(0, weight=1)
 
         self.menubar = Menubar(self)
 
@@ -84,23 +69,21 @@ class Dates(tk.Frame):
     def create_buttons(self):
         """
         Creates the "Yesterday", "Today" and "Tomorrow" buttons.
-        Default size is medium.
+        Default size is medium. Padding is used as a way to change button size.
         """
         
         self.s = ttk.Style()
         self.s.configure("date.TButton", width=14)
 
         self.yesterday_btn = ttk.Button(self, text="Yesterday (1)", 
-                        style="date.TButton", 
-                        command=lambda: self.copy_date(1))
-
+                                        style="date.TButton", 
+                                        command=lambda: self.copy_date(1))
         self.today_btn = ttk.Button(self, text="Today (2)",
-                        style="date.TButton", 
-                        command=lambda: self.copy_date(2))
-
+                                    style="date.TButton", 
+                                    command=lambda: self.copy_date(2))
         self.tomorrow_btn = ttk.Button(self, text="Tomorrow (3)",
-                        style="date.TButton", 
-                        command=lambda: self.copy_date(3))
+                                       style="date.TButton", 
+                                       command=lambda: self.copy_date(3))
 
         self.yesterday_btn.configure(padding=MEDIUM)
         self.today_btn.configure(padding=MEDIUM)
@@ -112,7 +95,7 @@ class Dates(tk.Frame):
         
     def set_keybinds(self):
         """
-        Sets up the buttons to correspond to 1,2,3. Gets passed the button
+        Sets up the buttons to correspond to 1,2,3. Passes the button
         number so copy_date knows what to do.
         """
         
@@ -125,16 +108,13 @@ class Dates(tk.Frame):
         """
         Clears clipboard and depending on option, gives the correct date.
         Uses the inbuilt datetime module.
-        (Learned how to do this after doing the bash command option in the osx
-        version).
-        Also sets focus on the associated button so user knows what they
+        Also sets focus on the associated button so user knows what they just 
         pressed.
         """
         
         self.parent.clipboard_clear()
         
         self.date = date.today()
-
         if option == 1:
             self.yesterday_btn.focus()
             self.date -= timedelta(days=1)
@@ -151,7 +131,6 @@ class Dates(tk.Frame):
 
         if self.parent.menubar.trailing_check.get():
             self.output += ' '
-
         if self.parent.menubar.leading_check.get():
             self.output = ' ' + self.output
 
@@ -274,7 +253,7 @@ class Menubar(tk.Menu):
         """
         Submenu inside 'Options'. Contains 'Small', 'Medium' and 'Large'.
         These options change the size of the buttons.
-        The default is 'Medium'
+        The default is 'Medium'.
         """
 
         self.sizemenu = tk.Menu(self.optionsmenu)
@@ -322,11 +301,11 @@ class Menubar(tk.Menu):
                                          onvalue=True, offvalue=False)
 
         ### These Bool values are used when creating the actual output.
-        ### (Dates.copy_date)
+        ### (in Dates.copy_date)
 
     def size_scale_window(self):
         """
-        Contains a scale to adjust the size of the buttons. From 20-200.
+        Contains a scale to adjust the size of the buttons. From MIN-MAX.
         There is also a number displaying the current size selected and an 'OK'
         button to choose the selection.
         The scales always starts at the current size.
@@ -378,7 +357,7 @@ class Menubar(tk.Menu):
 
     def close_size_scale(self):
         """
-        Closes the size scale window.
+        Closes the size scale window. Used by the 'cancel' button.
         """
 
         self.size_scale.destroy()
@@ -386,12 +365,7 @@ class Menubar(tk.Menu):
 root = tk.Tk()
 
 root.title("Date Copy Tool")
-
-root.rowconfigure(0, weight=1)
-root.columnconfigure(0, weight=1)
-
 root.resizable(tk.FALSE, tk.FALSE)
 
 app = MainApp(root)
-
 root.mainloop()
