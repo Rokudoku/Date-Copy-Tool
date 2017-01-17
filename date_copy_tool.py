@@ -185,7 +185,7 @@ class Menubar(tk.Menu):
         """
 
         WIDTH = str(400)
-        HEIGHT = str(300)
+        HEIGHT = str(324) 
         EXTRA_X = 30
         EXTRA_Y = 30
         
@@ -206,11 +206,11 @@ class Menubar(tk.Menu):
                     "You have the choice to either click the buttons or " \
                     "use the numbers in the parentheses inside the buttons. " \
                     "But remember, you must be tabbed into the program to use " \
-                    "the numbers. This makes alt-tabbing probably the \n" \
+                    "the numbers. This makes alt-tabbing probably the " \
                     "most efficient way of using this tool.\n" \
                     "\nThe date is in the format:\n" \
                     "\t<Day> <Abbreviated Month> " \
-                    "<Full Year> \n\te.g. 16 Jan 2017\n\n" \
+                    "<Full Year>\n\te.g. 16 Jan 2017\n\n" \
                     "The size of the buttons and the addition of a space " \
                     "before or after the date (or both) can be changed " \
                     "using the 'Options' menu.\n\n" \
