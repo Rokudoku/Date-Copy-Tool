@@ -91,8 +91,7 @@ class Dates(tk.Frame):
         #self.sizegrip.grid(row=999, column=999, sticky="se")
         
         self.s = ttk.Style()
-
-        self.s.configure("date.TButton", padding=35, width=14)
+        self.s.configure("date.TButton", width=14)
 
         self.yesterday_btn = ttk.Button(self, text="Yesterday (1)", 
                         style="date.TButton", 
@@ -270,6 +269,7 @@ class Menubar(tk.Menu):
 
         self.size = self.size_submenu()
         self.spacing = self.spacing_submenu()
+        self.sizescale = self.size_scale_option()
         self.resizable = self.resizable_option()
 
     def size_submenu(self):
@@ -328,18 +328,58 @@ class Menubar(tk.Menu):
 
     def size_scale_option(self):
         """
-        A scale to adjust the size of the buttons. From 20-200.
-        A new window is made that shows up in the same spot regardless of where
-        the mainwindow is by using the root_coords method.
+        'Options' option that brings up the size scale window.
+        """
+
+        self.optionsmenu.add_command(label='Button Size Scale',
+                                     command=self.size_scale_window)
+
+    def size_scale_window(self):
+        """
+        Contains a scale to adjust the size of the buttons. From 20-200.
+        There is also a number displaying the current size selected and an 'OK'
+        button to choose the selection.
+        The root_coords method is used to always locate the scale window in the
+        same spot regardless of root position.
         """
 
         MIN = 20
         MAX = 200
 
+        EXTRA_X = 30          #extra positioning in relation to the root window
+        EXTRA_Y = 30
+
+        self.size_scale = tk.Toplevel(self.parent)
+
+        #finding the padding returned a tuple of pixel objects
+        #the string method returns the value of the pixel object
+        currentsize = self.parent.dates.today_btn['padding'][0].string
+
+        self.scale = tk.Scale(self.size_scale, orient='horizontal', length=100,
+                               from_=MIN, to=MAX)
+        self.scale.set(currentsize)
+        self.scale.grid(row=0, column=0)
+        
+        (root_x, root_y) = self.root_coords()
+        x = int(root_x) + EXTRA_X
+        y = int(root_y) + EXTRA_Y
+        self.size_scale.geometry("" + '+' + str(x) + '+'
+                                  + str(y))
+        self.size_scale.resizable(tk.FALSE, tk.FALSE)
+
+    def use_size_scale(self):
+        """
+        Changes the padding size of the buttons to the current value of the
+        size scale.
+        """
+
+        print(str(self.num.get()))
+
     def resizable_option(self):
         """
         Sets the boolean variable of resizable_check to be either true or false.
         """
+        
         self.resizable_check = tk.BooleanVar()
         self.optionsmenu.add_checkbutton(label='Resizable',
                                          variable=self.resizable_check,
