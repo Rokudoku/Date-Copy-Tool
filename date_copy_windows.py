@@ -206,14 +206,21 @@ class Menubar(tk.Menu):
     def about_window(self):
         """
         A new window that gives information about this program.
+        Adds EXTRA space in relation to the root window for both x and y.
         """
 
         WIDTH = str(400)
         HEIGHT = str(300)
+        EXTRA = 30
         
         self.aboutwindow = tk.Toplevel(self.parent)
         self.aboutwindow.title('About Date Copy Tool')
-        self.aboutwindow.geometry(WIDTH + 'x' + HEIGHT + self.root_coords())
+
+        (root_x, root_y) = self.root_coords()
+        x = int(root_x) + EXTRA
+        y = int(root_y) + EXTRA
+        self.aboutwindow.geometry(WIDTH + 'x' + HEIGHT + '+' + str(x) + '+'
+                                  + str(y))
         self.aboutwindow.resizable(tk.FALSE, tk.FALSE)
 
         abouttext = "Welcome to Date Copy Tool!\n\n" \
@@ -238,19 +245,14 @@ class Menubar(tk.Menu):
 
     def root_coords(self):
         """
-        Returns the x/y coordinates of the root window. (as +x+y)
-        Used to find out where to place other toplevel windows.
-        Don't want to be placed EXACTLY on top, so there is a bit extra.
+        Returns the x/y coordinates of the root window as (x, y).
+        Used to find out where to place other toplevel windows in relation to
+        root.
         """
         
-        EXTRA = 30
-        
-        #.geometry() gets format of heightxwidth+x+y
+        #.geometry() has format of heightxwidth+x+y
         coords = self.root.geometry().split('+')
-        x = int(coords[1]) + EXTRA
-        y = int(coords[2]) + EXTRA
-        result = '+' + str(x) + '+' + str(y)
-        return result
+        return (coords[1], coords[2])
     
     def close_window(self):
         """Closes the program by destryoing root window."""
@@ -323,6 +325,16 @@ class Menubar(tk.Menu):
 
         ### These Bool values are used when creating the actual output.
         ### (Dates.copy_date)
+
+    def size_scale_option(self):
+        """
+        A scale to adjust the size of the buttons. From 20-200.
+        A new window is made that shows up in the same spot regardless of where
+        the mainwindow is by using the root_coords method.
+        """
+
+        MIN = 20
+        MAX = 200
 
     def resizable_option(self):
         """
