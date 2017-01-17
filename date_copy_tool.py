@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-=== Date Copy Tool - Windows Version ===
+=== Date Copy Tool ===
 A tool that copies a specified date to clipboard so that it can be pasted. 
 
 By pressing the 'Today' button or using its hotkey, the current date is 
