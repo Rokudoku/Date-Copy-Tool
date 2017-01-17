@@ -278,7 +278,7 @@ class Menubar(tk.Menu):
         """
 
         self.sizemenu = tk.Menu(self.optionsmenu)
-        self.optionsmenu.add_cascade(menu=self.sizemenu, label='Size')
+        self.optionsmenu.add_cascade(menu=self.sizemenu, label='Size (Presets)')
 
         self.button_size = tk.StringVar()
         self.sizemenu.add_radiobutton(label='Small', 
@@ -313,13 +313,13 @@ class Menubar(tk.Menu):
 
         self.leading_check = tk.BooleanVar()
         self.spacingmenu.add_checkbutton(label='Leading Space', 
-                                    variable=self.leading_check,
-                                    onvalue=True, offvalue=False)
+                                         variable=self.leading_check,
+                                         onvalue=True, offvalue=False)
 
         self.trailing_check = tk.BooleanVar()
         self.spacingmenu.add_checkbutton(label='Trailing Space',
-                                    variable=self.trailing_check,
-                                    onvalue=True, offvalue=False)
+                                         variable=self.trailing_check,
+                                         onvalue=True, offvalue=False)
 
         ### These Bool values are used when creating the actual output.
         ### (Dates.copy_date)
@@ -335,7 +335,7 @@ class Menubar(tk.Menu):
         """
 
         MIN = 20
-        MAX = 200
+        MAX = 150
 
         EXTRA_X = 30          #extra positioning in relation to the root window
         EXTRA_Y = 30
@@ -347,11 +347,12 @@ class Menubar(tk.Menu):
         currentsize = self.parent.dates.today_btn['padding'][0].string
 
         self.scale = tk.Scale(self.size_scale, orient='horizontal', length=100,
-                               from_=MIN, to=MAX)
+                              from_=MIN, to=MAX)
         self.scale.set(currentsize)
         self.scale.pack()
         
-        self.scale_select = ttk.Button(self.size_scale, text='Select')
+        self.scale_select = ttk.Button(self.size_scale, text='Select',
+                                       command=self.use_size_scale)
         self.scale_select.pack(side='left')
         self.scale_cancel = ttk.Button(self.size_scale, text='Cancel',
                                        command=self.close_size_scale)
@@ -369,7 +370,11 @@ class Menubar(tk.Menu):
         size scale.
         """
 
-        print(str(self.num.get()))
+        val = self.scale.get()
+        self.parent.dates.yesterday_btn.configure(padding=val)
+        self.parent.dates.today_btn.configure(padding=val)
+        self.parent.dates.tomorrow_btn.configure(padding=val)
+        self.size_scale.destroy()
 
     def close_size_scale(self):
         """
