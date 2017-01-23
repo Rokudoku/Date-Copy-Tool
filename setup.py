@@ -3,6 +3,7 @@
 # and
 # https://www.youtube.com/watch?v=HosXxXE24hA
 
+import sys
 from cx_Freeze import setup, Executable
 
 base = None
