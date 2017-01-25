@@ -22,6 +22,6 @@ setup(name = "Date-Copy-Tool",
       executables = [Executable("date_copy_tool.py", base=base)])
 
 
-# First attempt resolted in KeyError: 'TCL_Library'.
+# First attempt using Python 3.5 resulted in KeyError: 'TCL_Library'.
 # The attempted bugfix to force the paths to point to my tcl and tk folders
-# resulted in >1600 file large build folder...
+# created a build but it failed to run properly.
